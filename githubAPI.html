@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Github API</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+      img {width: 100%;}
+    </style>
+  </head>
+  <body>
+  <div class="container">
+    <div id="profile"></div>
+  </div>
+  <script>
+    function getProfile() {
+      var username = 'EmerssonChew';
+      var xhttp = new XMLHttpRequest();
+      xhttp.open('GET', 'https://api.github.com/users/' + username, true);
+      xhttp.send();
+      xhttp.onreadystatechange = function() {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+          var user = JSON.parse(xhttp.responseText);
+          var repo = 'https://github.com/' + username + '?tab=repositories';
+          var followers = 'https://github.com/' + username + '?tab=followers';
+          var following = 'https://github.com/' + username + '?tab=following';
+          document.getElementById('profile').innerHTML = `<div class="panel panel-default">
+                                                            <div class="panel-heading">
+                                                              <h3 class="panel-title">${user.name}</h3>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                              <div class="row">
+                                                                <div class="col-xs-12 col-sm-4 col-md-3">
+                                                                  <img src="${user.avatar_url}" alt="" />
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-8 col-md-9">
+                                                                  <ul class="list-group">
+                                                                    <li class="list-group-item">Username: ${user.login}</li>
+                                                                    <li class="list-group-item">Email: ${user.email}</li>
+                                                                    <li class="list-group-item">
+                                                                      <a href="${repo}">
+                                                                      Public Repositories
+                                                                      <span class="badge pull-right">${user.public_repos}</span>
+                                                                      </a>
+                                                                    </li>
+                                                                    <li class="list-group-item">
+                                                                      <a href="${followers}">
+                                                                      Followers
+                                                                      <span class="badge pull-right">${user.followers}</span>
+                                                                      </a>
+                                                                    </li>
+                                                                    <a href="${following}">
+                                                                    <li class="list-group-item">
+                                                                      <a href="${following}">
+                                                                      Following
+                                                                      <span class="badge pull-right">${user.following}</span>
+                                                                      </a>
+                                                                    </li>
+                                                                    </a>
+                                                                  </ul>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>`;
+        }
+      }
+    }
+    getProfile();
+  </script>
+  </body>
+</html>
