@@ -10,6 +10,7 @@
   </head>
   <body>
   <div class="container">
+    <div id="search-bar"></div>
     <div id="profile"></div>
   </div>
   <script>
@@ -21,7 +22,12 @@
       xhttp.onreadystatechange = function() {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
           var user = JSON.parse(xhttp.responseText);
+          var userProfile = 'https://github.com/' + username;
           var repo = 'https://github.com/' + username + '?tab=repositories';
+          var email = user.email;
+          if (email = 'null') {
+            email = 'Hidden';
+          }
           var followers = 'https://github.com/' + username + '?tab=followers';
           var following = 'https://github.com/' + username + '?tab=following';
           document.getElementById('profile').innerHTML = `<div class="panel panel-default">
@@ -31,35 +37,28 @@
                                                             <div class="panel-body">
                                                               <div class="row">
                                                                 <div class="col-xs-12 col-sm-4 col-md-3">
-                                                                  <img src="${user.avatar_url}" alt="" />
+                                                                  <img src="${user.avatar_url}" alt="User Avatar" />
                                                                 </div>
                                                                 <div class="col-xs-12 col-sm-8 col-md-9">
                                                                   <ul class="list-group">
                                                                     <li class="list-group-item">Username: ${user.login}</li>
-                                                                    <li class="list-group-item">Email: ${user.email}</li>
+                                                                    <li class="list-group-item">Email: ${email}</li>
                                                                     <li class="list-group-item">
-                                                                      <a href="${repo}">
                                                                       Public Repositories
                                                                       <span class="badge pull-right">${user.public_repos}</span>
-                                                                      </a>
                                                                     </li>
                                                                     <li class="list-group-item">
-                                                                      <a href="${followers}">
                                                                       Followers
                                                                       <span class="badge pull-right">${user.followers}</span>
-                                                                      </a>
                                                                     </li>
-                                                                    <a href="${following}">
                                                                     <li class="list-group-item">
-                                                                      <a href="${following}">
                                                                       Following
                                                                       <span class="badge pull-right">${user.following}</span>
-                                                                      </a>
                                                                     </li>
-                                                                    </a>
                                                                   </ul>
                                                                 </div>
                                                               </div>
+                                                              <a href="${userProfile}" class="btn btn-primary pull-right" role="button">Visit Github Profile</a>
                                                             </div>
                                                           </div>`;
         }
