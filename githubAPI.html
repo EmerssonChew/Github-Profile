@@ -6,14 +6,26 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
       img {width: 100%;}
+      
+      .row {display: flex;}
+
+      #getProfileButton {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin-right: 15px;
+      }
     </style>
   </head>
   <body>
   <div class="container">
+    <div class="page-header">
+      <h1>Github Profile Finder</h1>
+    </div>
     <form id="userForm">
       <div class="form-group" id="search-bar">
         <label>Github Username:</label>
-        <input class="form-control" id="username" type="text">
+        <input class="form-control" id="username" type="text" placeholder="Press Enter to submit">
       </div>
     </form>
     <div id="profile"></div>
@@ -35,7 +47,7 @@
           var userProfile = 'https://github.com/' + username;
           var repo = 'https://github.com/' + username + '?tab=repositories';
           var email = user.email;
-          if (email === 'null') {
+          if (email = 'null') {
             email = 'Hidden';
           }
           var followers = 'https://github.com/' + username + '?tab=followers';
@@ -50,25 +62,18 @@
                                                                   <img src="${user.avatar_url}" alt="User Avatar">
                                                                 </div>
                                                                 <div class="col-xs-12 col-sm-8 col-md-9">
+                                                                  <span class="label label-default">Public Repos ${user.public_repos}</span>
+                                                                  <span class="label label-primary">Followers ${user.followers}</span>
+                                                                  <span class="label label-success">Following ${user.following}</span>
+                                                                  <br>
+                                                                  <br>
                                                                   <ul class="list-group">
                                                                     <li class="list-group-item">Username: ${user.login}</li>
                                                                     <li class="list-group-item">Email: ${email}</li>
-                                                                    <li class="list-group-item">
-                                                                      Public Repositories
-                                                                      <span class="badge pull-right">${user.public_repos}</span>
-                                                                    </li>
-                                                                    <li class="list-group-item">
-                                                                      Followers
-                                                                      <span class="badge pull-right">${user.followers}</span>
-                                                                    </li>
-                                                                    <li class="list-group-item">
-                                                                      Following
-                                                                      <span class="badge pull-right">${user.following}</span>
-                                                                    </li>
                                                                   </ul>
+                                                                  <a class="btn btn-primary pull-right" id="getProfileButton" href="${userProfile}" target ="_blank" role="button">Visit Github Profile</a>
                                                                 </div>
                                                               </div>
-                                                              <a class="btn btn-primary pull-right" href="${userProfile}" target ="_blank" role="button">Visit Github Profile</a>
                                                             </div>
                                                           </div>`;
         }
