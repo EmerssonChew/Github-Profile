@@ -10,12 +10,22 @@
   </head>
   <body>
   <div class="container">
-    <div id="search-bar"></div>
+    <form id="userForm">
+      <div class="form-group" id="search-bar">
+        <label>Github Username:</label>
+        <input class="form-control" id="username" type="text">
+      </div>
+    </form>
     <div id="profile"></div>
   </div>
   <script>
-    function getProfile() {
-      var username = 'EmerssonChew';
+    function getProfile(e) {
+      e.preventDefault();
+      console.log('Fetching...');
+      var username = document.getElementById('username').value;
+      if (username === '') {
+        username = 'EmerssonChew';
+      }
       var xhttp = new XMLHttpRequest();
       xhttp.open('GET', 'https://api.github.com/users/' + username, true);
       xhttp.send();
@@ -25,7 +35,7 @@
           var userProfile = 'https://github.com/' + username;
           var repo = 'https://github.com/' + username + '?tab=repositories';
           var email = user.email;
-          if (email = 'null') {
+          if (email === 'null') {
             email = 'Hidden';
           }
           var followers = 'https://github.com/' + username + '?tab=followers';
@@ -37,7 +47,7 @@
                                                             <div class="panel-body">
                                                               <div class="row">
                                                                 <div class="col-xs-12 col-sm-4 col-md-3">
-                                                                  <img src="${user.avatar_url}" alt="User Avatar" />
+                                                                  <img src="${user.avatar_url}" alt="User Avatar">
                                                                 </div>
                                                                 <div class="col-xs-12 col-sm-8 col-md-9">
                                                                   <ul class="list-group">
@@ -58,13 +68,13 @@
                                                                   </ul>
                                                                 </div>
                                                               </div>
-                                                              <a href="${userProfile}" class="btn btn-primary pull-right" role="button">Visit Github Profile</a>
+                                                              <a class="btn btn-primary pull-right" href="${userProfile}" target ="_blank" role="button">Visit Github Profile</a>
                                                             </div>
                                                           </div>`;
         }
       }
     }
-    getProfile();
+    document.getElementById('userForm').addEventListener('submit', getProfile, false);
   </script>
   </body>
 </html>
